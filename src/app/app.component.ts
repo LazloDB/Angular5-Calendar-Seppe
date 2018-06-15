@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { routine } from './common/schedules/seppe';
+import 'normalize.css';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,6 @@ import { routine } from './common/schedules/seppe';
 })
 export class AppComponent implements OnInit {
   today: Date;
-
   constructor() {
 
   }

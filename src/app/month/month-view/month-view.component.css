@@ -82,11 +82,18 @@
     position: fixed;
     top: 0;
     width: 100vw;
+    border-radius: 0;
+    z-index: 1;
   }
 
   .month {
     width: 100vw;
-    margin-top: 64px;
-    grid-template-columns: 1fr;
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day {
+    min-height: 100px;
   }
 }

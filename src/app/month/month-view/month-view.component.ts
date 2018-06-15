@@ -10,6 +10,7 @@ import * as addMonths from 'date-fns/add_months';
 import * as subMonths from 'date-fns/sub_months';
 // import * as getDay from 'date-fns/get_day';
 import { routine } from '../../common/schedules/seppe';
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'ldb-month-view',
@@ -22,7 +23,7 @@ export class MonthViewComponent implements OnInit {
   todayFormatted: string;
   monthFormatted: string;
 
-  constructor() { }
+  constructor(private deviceService: DeviceService) { }
 
   ngOnInit() {
     this.todayFormatted = format(this.today, 'D');
@@ -34,7 +35,7 @@ export class MonthViewComponent implements OnInit {
     const startOfCalendar = startOfWeek(startOfMonth(this.today), { weekStartsOn: 1 });
     const endOfCalendar = endOfWeek(endOfMonth(this.today), {weekStartsOn: 1});
 
-    if (!isSameMonth(startOfCalendar, this.today)) {
+    if (!isSameMonth(startOfCalendar, this.today) && !this.deviceService.isMobile()) {
       for (let i: number = 0; i < (Number(format(endOfMonth(startOfCalendar), 'D')) + 1) - Number(format(startOfCalendar, 'D')); i++) {
         let routineDay = this.getDayOfYear(addDays(startOfCalendar, i));
         this.days.push({day: Number(format(startOfCalendar, 'D')) + i, inMonth: false, routine: routine[routineDay]});
@@ -47,7 +48,7 @@ export class MonthViewComponent implements OnInit {
     }
 
     // This fills up the end of the calendar.
-    if (!isSameMonth(endOfCalendar, this.today)) {
+    if (!isSameMonth(endOfCalendar, this.today) && !this.deviceService.isMobile()) {
       let end = Number(format(endOfCalendar, 'D'));
       for (let i: number = 0; i < end; i++) {
         let routineDay = this.getDayOfYear(addDays(endOfCalendar, i - 1));
