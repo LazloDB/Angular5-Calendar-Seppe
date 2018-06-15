@@ -1,0 +1,14 @@
+<div class="container">
+  <p class="month-header">
+    <i (click)="previousMonth()" class="fas fa-arrow-left"></i>
+    {{monthFormatted}}
+    <i (click)="nextMonth()" class="fas fa-arrow-right"></i>
+  </p>
+
+  <div class="month">
+    <div class="day" *ngFor="let day of days" [ngClass]="day.day == todayFormatted ?'today' : day.routine === 'X' ? 'free' : ''">
+      <span [ngStyle]="{'opacity': !day.inMonth ? 0.3 : 1}">{{day.day}}</span>
+      <span [ngStyle]="{'opacity': !day.inMonth ? 0.3 : 1}">{{getShift(day.routine)}}</span>
+    </div>
+  </div>
+</div>

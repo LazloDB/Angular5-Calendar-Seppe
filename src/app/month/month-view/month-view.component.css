@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  height: 97vh;
+}
+
+.month-header {
+  width: 900px;
+  max-width: 900px;
+  background-color: #039BE5;
+  color: #fff;
+  margin: 0;
+  padding: 20px 0;
+  font-size: 24px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.fas {
+  cursor: pointer;
+}
+
+.fa-arrow-left {
+  position: absolute;
+  left: 20px;
+}
+
+.fa-arrow-right {
+  position: absolute;
+  right: 20px;
+}
+
+.month {
+  display: grid;
+  width: 900px;
+  max-width: 900px;
+  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.today {
+  background-color: #01579B;
+  color: white;
+  box-shadow: 0px 3px 25px 0px rgba(0,0,0,0.59);
+}
+
+.day {
+  height: 100px;
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.free {
+  background-color: rgba(179, 229, 252, 0.507);
+}
