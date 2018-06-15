@@ -9,7 +9,8 @@ export class DeviceService {
 
   isMobile(): boolean {
     let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    if (width < 375) {
+    console.log(width);
+    if (width < 638) {
       return true;
     } else {
       return false;
