@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as startOfWeek from 'date-fns/start_of_week';
 import * as endOfWeek from 'date-fns/end_of_week';
 import * as startOfMonth from 'date-fns/start_of_month';
@@ -19,6 +19,7 @@ import { DeviceService } from '../../services/device.service';
 })
 export class MonthViewComponent implements OnInit {
   @Input() today: any;
+	@ViewChild('month', {read: ElementRef}) month: ElementRef;
   days: any = [];
   todayFormatted: string;
   monthFormatted: string;
@@ -88,13 +89,34 @@ export class MonthViewComponent implements OnInit {
 
   nextMonth() {
     this.today = addMonths(this.today, 1);
-    this.days = [];
-    this.buildMonth();
+    this.rebuild();
   }
 
   previousMonth() {
     this.today = subMonths(this.today, 1);
+    this.rebuild();
+  }
+
+  rebuild() {
     this.days = [];
     this.buildMonth();
+    this.scrollTop(this.month);
+  }
+
+  scrollTop(element: ElementRef) {
+    let scrollValue= 400;
+    let rest = element.nativeElement.scrollTop % scrollValue;
+
+    setTimeout(() => {
+        if (rest % scrollValue !== 0) {
+          element.nativeElement.scrollTop = element.nativeElement.scrollTop - scrollValue;
+        } else {
+          element.nativeElement.scrollTop = element.nativeElement.scrollTop - rest;
+        }
+
+        if (element.nativeElement.scrollTop !== 0) {
+          this.scrollTop(element);
+        }
+    }, 50);
   }
 }
