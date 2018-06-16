@@ -38,31 +38,27 @@ export class MonthViewComponent implements OnInit {
 
     if (!isSameMonth(startOfCalendar, this.today) && !this.deviceService.isMobile()) {
       for (let i: number = 0; i < (Number(format(endOfMonth(startOfCalendar), 'D')) + 1) - Number(format(startOfCalendar, 'D')); i++) {
-        let routineDay = this.getDayOfYear(addDays(startOfCalendar, i));
-        this.days.push({day: Number(format(startOfCalendar, 'D')) + i, inMonth: false, routine: routine[routineDay]});
+        let routineDay = this.getDayInRoutine(Number(format(addDays(startOfCalendar, i), 'DDD')));
+        this.days.push({number: Number(format(startOfCalendar, 'D')) + i, day: format(addDays(startOfCalendar, i), 'dddd'), inMonth: false, routine: routine[routineDay - 1]});
       }
     }
 
     for (let i: number = Number(format(startOfMonth(this.today), 'D')); i < Number(format(endOfMonth(this.today), 'D')) + 1; i++) {
-      let routineDay = this.getDayOfYear(addDays(startOfMonth(this.today), i));
-      this.days.push({day: i, inMonth: true, routine: routine[routineDay - 1]});
+      let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonth(this.today), i), 'DDD')));
+      this.days.push({number: i, day: format(addDays(startOfCalendar, i + 3), 'dddd'), inMonth: true, routine: routine[routineDay - 2]});
     }
 
     // This fills up the end of the calendar.
     if (!isSameMonth(endOfCalendar, this.today) && !this.deviceService.isMobile()) {
       let end = Number(format(endOfCalendar, 'D'));
       for (let i: number = 0; i < end; i++) {
-        let routineDay = this.getDayOfYear(addDays(endOfCalendar, i - 1));
-        this.days.push({day: i + 1, inMonth: false, routine: routine[routineDay - 1]});
+        let routineDay = this.getDayInRoutine(Number(format(addDays(endOfCalendar, i - 1), 'DDD')));
+        this.days.push({number: i + 1, day: format(addDays(startOfCalendar, i - 1), 'dddd'), inMonth: false, routine: routine[routineDay - 3]});
       }
     }
   }
 
-  getDayOfYear(date: any): number {
-    let start: any = new Date(date.getFullYear(), 0, 0);
-    let diff: any = date - start;
-    let oneDay = 1000 * 60 * 60 * 24;
-    let day =  Math.floor(diff / oneDay);
+  getDayInRoutine(day: any): number {
     while(day > 42) {
       day = day - 42;
     }
@@ -100,7 +96,9 @@ export class MonthViewComponent implements OnInit {
   rebuild() {
     this.days = [];
     this.buildMonth();
-    this.scrollTop(this.month);
+    if (this.deviceService.isMobile()) {
+      this.scrollTop(this.month);
+    }
   }
 
   scrollTop(element: ElementRef) {
