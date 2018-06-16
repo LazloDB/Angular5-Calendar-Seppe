@@ -33,7 +33,8 @@ export class MonthViewComponent implements OnInit {
 
   buildMonth() {
     this.monthFormatted = format(this.today, 'MMMM YYYY');
-    const startOfCalendar = startOfWeek(startOfMonth(this.today), { weekStartsOn: 1 });
+    const startOfMonthDay = startOfMonth(this.today);
+    const startOfCalendar = startOfWeek(startOfMonthDay, { weekStartsOn: 1 });
     const endOfCalendar = endOfWeek(endOfMonth(this.today), {weekStartsOn: 1});
 
     if (!isSameMonth(startOfCalendar, this.today) && !this.deviceService.isMobile()) {
@@ -43,8 +44,8 @@ export class MonthViewComponent implements OnInit {
       }
     }
 
-    for (let i: number = Number(format(startOfMonth(this.today), 'D')); i < Number(format(endOfMonth(this.today), 'D')) + 1; i++) {
-      let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonth(this.today), i), 'DDD')));
+    for (let i: number = Number(format(startOfMonthDay, 'D')); i < Number(format(endOfMonth(this.today), 'D')) + 1; i++) {
+      let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonthDay, i), 'DDD')));
       this.days.push({number: i, day: format(addDays(startOfCalendar, i + 3), 'dddd'), inMonth: true, routine: routine[routineDay - 2]});
     }
 
