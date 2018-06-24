@@ -1,4 +1,4 @@
-import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter, HostBinding } from '@angular/core';
 
 @Directive({
   selector: '[draggable]'
@@ -9,6 +9,8 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
   private dragging = false;
+
+  @HostBinding('attr.touch-action') touchAction = 'none';
 
   @HostListener('pointerdown', ['$event']) onPointerDown(event: PointerEvent): void {
     this.dragging = true;
