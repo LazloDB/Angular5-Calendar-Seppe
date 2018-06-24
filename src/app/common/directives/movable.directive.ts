@@ -11,6 +11,7 @@ interface Position {
   selector: '[movable]'
 })
 export class MovableDirective extends DraggableDirective {
+  // https://www.youtube.com/watch?v=mGrY-eZN9hc by Dirk Luijk
   private position: Position = { x: 0, y: 0 };
   private startPosition: Position = { x: 0, y: 0 };
 
@@ -19,7 +20,7 @@ export class MovableDirective extends DraggableDirective {
   }
 
   @HostBinding('style.transform') get transform(): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(`translateX(${this.position.x}) translateY(${this.position.y})`);
+    return this.sanitizer.bypassSecurityTrustStyle(`translateX(${this.position.x}px) translateY(${this.position.y}px)`);
   }
 
   @HostListener('dragStart', ['$event']) onDragStart(event: PointerEvent) {
