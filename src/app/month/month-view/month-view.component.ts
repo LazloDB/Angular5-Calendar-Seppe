@@ -10,6 +10,7 @@ import * as addMonths from 'date-fns/add_months';
 import * as subMonths from 'date-fns/sub_months';
 // import * as getDay from 'date-fns/get_day';
 import { routine } from '../../common/schedules/seppe';
+import { events } from '../../common/events';
 import { DeviceService } from '../../services/device.service';
 
 @Component({
@@ -40,13 +41,13 @@ export class MonthViewComponent implements OnInit {
     if (!isSameMonth(startOfCalendar, this.today) && !this.deviceService.isMobile()) {
       for (let i: number = 0; i < (Number(format(endOfMonth(startOfCalendar), 'D')) + 1) - Number(format(startOfCalendar, 'D')); i++) {
         let routineDay = this.getDayInRoutine(Number(format(addDays(startOfCalendar, i), 'DDD')));
-        this.days.push({number: Number(format(startOfCalendar, 'D')) + i, day: format(addDays(startOfCalendar, i), 'dddd'), inMonth: false, routine: routine[routineDay - 1]});
+        this.days.push({number: Number(format(startOfCalendar, 'D')) + i, day: format(addDays(startOfCalendar, i), 'dddd'), inMonth: false, routine: routine[routineDay - 1], dayInYear: null});
       }
     }
 
     for (let i: number = Number(format(startOfMonthDay, 'D')); i < Number(format(endOfMonth(this.today), 'D')) + 1; i++) {
       let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonthDay, i), 'DDD')));
-      this.days.push({number: i, day: format(addDays(startOfCalendar, i + 3), 'dddd'), inMonth: true, routine: routine[routineDay - 2]});
+      this.days.push({number: i, day: format(addDays(startOfCalendar, i + 3), 'dddd'), inMonth: true, routine: routine[routineDay - 2], dayInYear: addDays(startOfCalendar, i + 3)});
     }
 
     // This fills up the end of the calendar.
@@ -54,7 +55,7 @@ export class MonthViewComponent implements OnInit {
       let end = Number(format(endOfCalendar, 'D'));
       for (let i: number = 0; i < end; i++) {
         let routineDay = this.getDayInRoutine(Number(format(addDays(endOfCalendar, i - 1), 'DDD')));
-        this.days.push({number: i + 1, day: format(addDays(startOfCalendar, i - 1), 'dddd'), inMonth: false, routine: routine[routineDay - 3]});
+        this.days.push({number: i + 1, day: format(addDays(startOfCalendar, i - 1), 'dddd'), inMonth: false, routine: routine[routineDay - 3], dayInYear: null});
       }
     }
   }
@@ -65,23 +66,6 @@ export class MonthViewComponent implements OnInit {
     }
 
     return day;
-  }
-
-  getShift(routine) {
-    switch(routine) {
-      case 'X':
-        return 'Vrij';
-      case 'N':
-        return 'Nacht';
-      case 'D':
-        return 'Dag';
-      case 'V':
-        return 'Vroege';
-      case 'L':
-        return 'Late';
-      default:
-        break;
-    }
   }
 
   nextMonth() {
@@ -117,5 +101,9 @@ export class MonthViewComponent implements OnInit {
           this.scrollTop(element);
         }
     }, 50);
+  }
+
+  getEvents(day) {
+    return events.filter((event) => format(event.date, 'DDD') ===  format(day, 'DDD'));
   }
 }

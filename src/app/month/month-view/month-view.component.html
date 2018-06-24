@@ -6,10 +6,8 @@
   </p>
 
   <div class="month" #month>
-    <div class="day" *ngFor="let day of days" [ngClass]="day.number == todayFormatted ?'today' : day.routine === 'X' ? 'free' : ''">
-      <span [ngStyle]="{'opacity': !day.inMonth ? 0.3 : 1}">{{day.number}}</span>
-      <span [ngStyle]="{'opacity': !day.inMonth ? 0.3 : 1}">{{day.day}}</span>
-      <span [ngStyle]="{'opacity': !day.inMonth ? 0.3 : 1}">{{getShift(day.routine)}}</span>
+    <div *ngFor="let day of days">
+      <ldb-day [day]="day" [today]="todayFormatted" [events]=getEvents(day.dayInYear)></ldb-day>
     </div>
   </div>
 </div>
