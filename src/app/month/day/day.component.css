@@ -40,18 +40,8 @@
   transition: all 0.2s ease-in-out;
 }
 
-.day:hover .event, .today .event {
+.day:hover .notification, .today .notification {
   background-color: #fff;
-}
-
-.tooltip {
-  position: absolute;
-  top: -20px;
-}
-
-.day:hover .tooltip {
-  color: #000;
-  width: 100%;
 }
 
 @media only screen and (max-width: 376px) {
@@ -59,7 +49,7 @@
     min-height: 100px;
   }
 
-  .event {
+  .notification {
     left: auto;
     right: 20px;
   }

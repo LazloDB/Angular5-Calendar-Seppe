@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import 'normalize.css';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,10 @@ import 'normalize.css';
 })
 export class AppComponent implements OnInit {
   today: Date;
-  constructor() {
-
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('nl');
   }
+
 
   ngOnInit() {
     this.today = new Date();
