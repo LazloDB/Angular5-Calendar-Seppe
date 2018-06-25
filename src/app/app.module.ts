@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { StoreModule } from '@ngrx/store';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // reducers
 import { reducers } from './common/reducers/index';
@@ -21,6 +24,10 @@ import { DeviceService } from './services/device.service';
 import { MovableDirective } from './common/directives/movable.directive';
 import { DraggableDirective } from './common/directives/draggable.directive';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +43,14 @@ import { DraggableDirective } from './common/directives/draggable.directive';
     StoreModule.forRoot(reducers, {
       initialState: {
         events: { isVisible: false, events: null }
+      }
+    }),
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
     }),
   ],

@@ -24,6 +24,7 @@ export class MonthViewComponent implements OnInit {
   days: any = [];
   todayFormatted: string;
   monthFormatted: string;
+  yearFormatted: string;
 
   constructor(private deviceService: DeviceService) { }
 
@@ -33,7 +34,8 @@ export class MonthViewComponent implements OnInit {
   }
 
   buildMonth() {
-    this.monthFormatted = format(this.today, 'MMMM YYYY');
+    this.monthFormatted = format(this.today, 'MMMM');
+    this.yearFormatted = format(this.today, 'YYYY');
     const startOfMonthDay = startOfMonth(this.today);
     const startOfCalendar = startOfWeek(startOfMonthDay, { weekStartsOn: 1 });
     const endOfCalendar = endOfWeek(endOfMonth(this.today), {weekStartsOn: 1});

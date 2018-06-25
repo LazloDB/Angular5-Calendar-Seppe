@@ -1,7 +1,7 @@
 <div class="container">
   <p class="month-header">
     <i (click)="previousMonth()" class="fas fa-arrow-left"></i>
-    {{monthFormatted}}
+    {{monthFormatted | translate}} {{yearFormatted}}
     <i (click)="nextMonth()" class="fas fa-arrow-right"></i>
   </p>
 

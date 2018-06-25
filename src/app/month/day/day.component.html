@@ -1,6 +1,6 @@
 <div class="day" [ngClass]="day?.number == today ? 'today' : day?.routine === 'X' ? 'free' : ''" (click)="openEvents()">
   <div [ngClass]="events.length > 0 ? 'notification' : ''"></div>
   <span [ngStyle]="{'opacity': !day?.inMonth ? 0.3 : 1}">{{day?.number}}</span>
-  <span [ngStyle]="{'opacity': !day?.inMonth ? 0.3 : 1}">{{day?.day}}</span>
+  <span [ngStyle]="{'opacity': !day?.inMonth ? 0.3 : 1}" translate>{{day?.day}}</span>
   <span [ngStyle]="{'opacity': !day?.inMonth ? 0.3 : 1}">{{getShift(day?.routine)}}</span>
 </div>
