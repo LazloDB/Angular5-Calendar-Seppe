@@ -33,11 +33,14 @@ export class MovableDirective extends DraggableDirective {
     // }
   }
 
-  @HostListener('dragMove', ['$event']) onDragMove(event: PointerEvent) {
-    // if (!this.deviceService.isMobile()) {
+  @HostListener('dragMove', ['$event']) onDragMove(event: any) {
+    if (event.type !== 'touchmove') {
       this.position.x = event.clientX - this.startPosition.x;
       this.position.y = event.clientY - this.startPosition.y;
-    // }
+    } else {
+      this.position.x = event.touches[0].clientX - this.startPosition.x;
+      this.position.y = event.touches[0].clientY - this.startPosition.y;
+    }
   }
 
   // @HostListener('dragEnd', ['$event ']) onDragEnd(event: PointerEvent) {
