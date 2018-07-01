@@ -30,7 +30,7 @@ export class MonthViewComponent implements OnInit {
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit() {
-    this.todayFormatted = format(this.today, 'D');
+    this.todayFormatted = format(this.today, 'DDD');
     this.buildMonth();
   }
 
@@ -50,7 +50,7 @@ export class MonthViewComponent implements OnInit {
 
     for (let i: number = 0; i < Number(format(endOfMonth(this.today), 'D')); i++) {
       let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonthDay, i - 1), 'DDD')));
-      this.days.push({number: i + 1, day: format(addDays(startOfMonthDay, i), 'dddd'), inMonth: true, routine: routine[routineDay], dayInYear: addDays(startOfMonthDay, i)});
+      this.days.push({number: i + 1, day: format(addDays(startOfMonthDay, i), 'dddd'), inMonth: true, routine: routine[routineDay], dayInYear: format(addDays(startOfMonthDay, i), 'DDD')});
     }
 
     // This fills up the end of the calendar.
