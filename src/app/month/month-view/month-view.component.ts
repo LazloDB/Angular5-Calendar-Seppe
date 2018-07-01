@@ -57,8 +57,8 @@ export class MonthViewComponent implements OnInit {
     if (!isSameMonth(endOfCalendar, this.today) && !this.deviceService.isMobile()) {
       let end = Number(format(endOfCalendar, 'D'));
       for (let i: number = 0; i < end; i++) {
-        let routineDay = this.getDayInRoutine(Number(format(subDays(endOfCalendar, 5 - i), 'DDD')));
-        this.days.push({number: i + 1, day: format(subDays(endOfCalendar, 4 - i), 'dddd'), inMonth: false, routine: routine[routineDay], dayInYear: null});
+        let routineDay = this.getDayInRoutine(Number(format(subDays(endOfCalendar, end - i), 'DDD')));
+        this.days.push({number: i + 1, day: format(subDays(endOfCalendar, end - i - 1), 'dddd'), inMonth: false, routine: routine[routineDay], dayInYear: null});
       }
     }
   }
@@ -107,6 +107,6 @@ export class MonthViewComponent implements OnInit {
   }
 
   getEvents(day) {
-    return events.filter((event) => format(event.date, 'DDD') ===  format(day, 'DDD'));
+    return events.filter((event) => format(event.date, 'DDD') === day);
   }
 }
