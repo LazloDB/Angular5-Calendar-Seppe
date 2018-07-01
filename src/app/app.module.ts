@@ -23,6 +23,7 @@ import { DeviceService } from './services/device.service';
 // directives
 import { MovableDirective } from './common/directives/movable.directive';
 import { DraggableDirective } from './common/directives/draggable.directive';
+import { EventAddComponent } from './event-add/event-add.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -36,7 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EventDisplayComponent,
     DraggableButtonComponent,
     MovableDirective,
-    DraggableDirective
+    DraggableDirective,
+    EventAddComponent
   ],
   imports: [
     BrowserModule,

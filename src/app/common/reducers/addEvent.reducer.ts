@@ -1,12 +1,13 @@
 import { Action } from '../models/action';
 
-export function events(state: any, action: Action) {
+export function addEvents(state: any, action: Action) {
     switch (action.type) {
-        case 'CLOSE_MODAL':
+        case 'CLOSE_ADD_EVENT_MODAL':
             return action.payload;
-        case 'SHOW_MODAL':
+        case 'SHOW_ADD_EVENT_MODAL':
             return {
               ...state,
+              isVisible: true,
               events: action.payload
             }
         default:

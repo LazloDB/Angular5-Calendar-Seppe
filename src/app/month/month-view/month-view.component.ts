@@ -6,6 +6,7 @@ import * as endOfMonth from 'date-fns/end_of_month';
 import * as isSameMonth from 'date-fns/is_same_month';
 import * as format from 'date-fns/format';
 import * as addDays from 'date-fns/add_days';
+import * as subDays from 'date-fns/sub_days';
 import * as addMonths from 'date-fns/add_months';
 import * as subMonths from 'date-fns/sub_months';
 // import * as getDay from 'date-fns/get_day';
@@ -47,23 +48,23 @@ export class MonthViewComponent implements OnInit {
       }
     }
 
-    for (let i: number = Number(format(startOfMonthDay, 'D')); i < Number(format(endOfMonth(this.today), 'D')) + 1; i++) {
-      let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonthDay, i), 'DDD')));
-      this.days.push({number: i, day: format(addDays(startOfCalendar, i + 3), 'dddd'), inMonth: true, routine: routine[routineDay - 2], dayInYear: addDays(startOfCalendar, i + 3)});
+    for (let i: number = 0; i < Number(format(endOfMonth(this.today), 'D')); i++) {
+      let routineDay = this.getDayInRoutine(Number(format(addDays(startOfMonthDay, i - 1), 'DDD')));
+      this.days.push({number: i + 1, day: format(addDays(startOfMonthDay, i), 'dddd'), inMonth: true, routine: routine[routineDay], dayInYear: addDays(startOfMonthDay, i)});
     }
 
     // This fills up the end of the calendar.
     if (!isSameMonth(endOfCalendar, this.today) && !this.deviceService.isMobile()) {
       let end = Number(format(endOfCalendar, 'D'));
       for (let i: number = 0; i < end; i++) {
-        let routineDay = this.getDayInRoutine(Number(format(addDays(endOfCalendar, i - 1), 'DDD')));
-        this.days.push({number: i + 1, day: format(addDays(startOfCalendar, i - 1), 'dddd'), inMonth: false, routine: routine[routineDay - 3], dayInYear: null});
+        let routineDay = this.getDayInRoutine(Number(format(subDays(endOfCalendar, 5 - i), 'DDD')));
+        this.days.push({number: i + 1, day: format(subDays(endOfCalendar, 4 - i), 'dddd'), inMonth: false, routine: routine[routineDay], dayInYear: null});
       }
     }
   }
 
   getDayInRoutine(day: any): number {
-    while(day > 42) {
+    while(day >= 42) {
       day = day - 42;
     }
 
